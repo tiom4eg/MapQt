@@ -33,22 +33,36 @@ class App(QtWidgets.QWidget, Ui_Form):
     def keyPressEvent(self, event):
         global spn, coordX, coordY
         if event.key() == QtCore.Qt.Key_PageUp:
-            spn += 0.5
-            self.loadImage()
+            if spn != 179.5:
+                spn += 0.5
+                self.loadImage()
         elif event.key() == QtCore.Qt.Key_PageDown:
-            spn -= 0.5
-            self.loadImage()
+            if spn != 0.5:
+                spn -= 0.5
+                self.loadImage()
         elif event.key() == QtCore.Qt.Key_Left:
-            coordX -= 0.5
+            if -180 < coordX <= -179.5:
+                coordX = 179.5
+            else:
+                coordX -= 0.5
             self.loadImage()
         elif event.key() == QtCore.Qt.Key_Right:
-            coordX += 0.5
+            if 179.5 <= coordX < 180:
+                coordX = -179
+            else:
+                coordX += 0.5
             self.loadImage()
         elif event.key() == QtCore.Qt.Key_Up:
-            coordY += 0.5
+            if 89.5 <= coordY < 90:
+                coordY = -89
+            else:
+                coordY += 0.5
             self.loadImage()
         elif event.key() == QtCore.Qt.Key_Down:
-            coordY -= 0.5
+            if -90 < coordY <= -89.5:
+                coordY = 89
+            else:
+                coordY -= 0.5
             self.loadImage()
 
     def loadImage(self):
@@ -74,3 +88,4 @@ if __name__ == "__main__":
     exe = App()
     exe.show()
     sys.exit(app.exec())
+
